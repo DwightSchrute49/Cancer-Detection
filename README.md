@@ -87,6 +87,7 @@ Run evaluation cells in `lung_cancer_pipeline.ipynb`
 ## Notes
 
 - **Generic for any image classification task**: This code works with any image dataset (medical imaging, plant disease, etc.), not just lung cancer. Just organize your data into class folders.
+- **CT scan support**: If your images are CT scans or grayscale medical images, the pipeline converts them to 3 channels automatically so the pretrained backbones can use them.
 - The code uses image augmentation for training and normalization for evaluation.
 - It is configured to use CUDA automatically when available.
 - For a 10 GB dataset, increase `--num-workers` if your machine has enough CPU cores and memory.

@@ -15,11 +15,29 @@ from model import LungCancerCNN
 def build_transform(image_size: int):
     return transforms.Compose(
         [
+            transforms.Grayscale(num_output_channels=3),
             transforms.Resize((image_size, image_size)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
+
+
+def validate_imagefolder_layout(dataset_dir: Path) -> None:
+    if not dataset_dir.exists():
+        raise FileNotFoundError(
+            f"Dataset directory not found: {dataset_dir}. Create it and add class folders."
+        )
+
+    class_dirs = [item for item in dataset_dir.iterdir() if item.is_dir()]
+    if not class_dirs:
+        raise FileNotFoundError(
+            "No class folders were found inside the dataset directory. "
+            "ImageFolder expects a structure like:\n"
+            "data/\n"
+            "  class_a/\n"
+            "  class_b/"
+        )
 
 
 def load_checkpoint(checkpoint_path: str, device: torch.device):
@@ -60,6 +78,7 @@ def main():
 
     image_size = int(checkpoint_args.get("image_size", args.image_size))
     test_dir = resolve_test_dir(args.data_dir)
+    validate_imagefolder_layout(test_dir)
     test_dataset = datasets.ImageFolder(test_dir, transform=build_transform(image_size))
     test_loader = DataLoader(
         test_dataset,
