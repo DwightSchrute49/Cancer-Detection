@@ -1,0 +1,34 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Data & Outputs (large files - don't commit)
+data/
+outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Misc
+.env
